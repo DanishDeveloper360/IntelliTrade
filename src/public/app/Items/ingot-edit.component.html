@@ -1,0 +1,123 @@
+<div>
+    <header>
+        <h3>
+            <span class="glyphicon glyphicon-user"></span> {{ item.name }}
+        </h3>
+    </header>
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            <h4> ITEMS
+            </h4>
+
+            <div class="table">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th> Item</th>
+                            <th>Weight</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <select class="form-control" [(ngModel)]="newItem.item" name="item">
+                                        <option *ngFor="let i of items" [ngValue]="i">{{i.name}}</option>
+                                    </select>
+
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" name="weight" [(ngModel)]="newItem.weight" #weight="ngModel" />
+
+                            </td>
+                            <td>
+                                <button class="btn btn-default" (click)="AddNewItem($event)">Add</button>
+                            </td>
+
+                        </tr>
+                        <tr *ngFor="let x of ingot.items;">
+                            <td>
+                                {{ x.item.name }}
+                            </td>
+                            <td>
+                                {{ x.weight }}
+                            </td>
+                            <td>
+                                <button class="btn btn-default" (click)="DeleteItem($event,x)">Remove</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!--<div class="form-group">
+                    <label> Name</label>
+                    <input type="text" class="form-control" name="name" [(ngModel)]="item.name" #name="ngModel" required>
+                    <div class="alert alert-danger" [hidden]="name.untouched || name.valid"> Name is required</div>
+                </div>
+                <div class="form-group">
+                    <label>Zinc %</label>
+                    <input type="text" class="form-control" name="zinc" [(ngModel)]="item.zinc" #zinc="ngModel" required>
+                    <div class="alert alert-danger" [hidden]="zinc.untouched || zinc.valid">Zinc % is required</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Waste %</label>
+                    <input type="text" class="form-control" name="waste" [(ngModel)]="item.waste" #waste="ngModel" required>
+                    <div class="alert alert-danger" [hidden]="waste.untouched || waste.valid">Waste % is required</div>
+                </div>-->
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label> Profit</label>
+                <input type="text" class="form-control">
+            </div>
+            <h4>
+                Wapsi - Residual
+            </h4>
+            <div class="form-group">
+                <label> Rodi</label>
+                <input type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label> L.M.</label>
+                <input type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label> Sisa</label>
+                <input type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label> Loha</label>
+                <input type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Zinc</label>
+                <input type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label> Nett Ingots Weight</label>
+                <input type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Ingot Rate</label>
+                <input type="text" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>Total Item Weight</label>
+                <input type="text" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>Total Item Weight - Zinc Weight</label>
+                <input type="text" class="form-control">
+            </div>
+        </div>
+
+    </div>
+    <br />
+</div>

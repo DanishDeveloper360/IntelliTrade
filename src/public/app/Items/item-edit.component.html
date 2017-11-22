@@ -1,0 +1,77 @@
+<div>
+  <header>
+      <h3>
+          <span class="glyphicon glyphicon-user"></span>
+          {{ item.name }}
+      </h3>
+  </header>
+  <br />
+  <form (ngSubmit)="submit()" #itemForm="ngForm" class="editForm" novalidate>
+    <div class="form-group">
+      <label> Name</label>
+      <input type="text" class="form-control" name="name" [(ngModel)]="item.name" #name="ngModel" required>
+      <div class="alert alert-danger" [hidden]="name.untouched || name.valid"> Name is required</div>
+    </div>
+    <div class="form-group">
+      <label>Zinc %</label>
+      <input type="text" class="form-control" name="zinc" [(ngModel)]="item.zinc" #zinc="ngModel" required>
+      <div class="alert alert-danger" [hidden]="zinc.untouched || zinc.valid">Zinc % is required</div>
+    </div>   
+   
+    <div class="form-group">
+      <label>Waste %</label>
+      <input type="text" class="form-control" name="waste" [(ngModel)]="item.waste" #waste="ngModel" required>
+      <div class="alert alert-danger" [hidden]="waste.untouched || waste.valid">Waste % is required</div>
+    </div>
+  
+    <br />
+
+    <div *ngIf="item">
+      <div class="alert alert-warning" *ngIf="item._id && deleteMessageEnabled">
+         Delete item?&nbsp;&nbsp;<button class="btn btn-danger" (click)="delete($event)">Yes</button>&nbsp;&nbsp;
+         <button class="btn btn-default" (click)="deleteMessageEnabled = false">No</button>
+      </div>
+      <button class="btn btn-danger" *ngIf="item._id && !deleteMessageEnabled" (click)="deleteMessageEnabled = true">Delete</button>&nbsp;&nbsp;
+
+      <div class="pull-right" *ngIf="!deleteMessageEnabled">
+        <button class="btn btn-default" (click)="cancel($event)">Cancel</button>&nbsp;&nbsp;
+        <button type="submit" class="btn btn-success" [disabled]="!itemForm.valid">{{ operationText }}</button>
+      </div>
+    </div>
+    <br />
+    <br />
+    <div class="alert alert-danger" *ngIf="errorMessage != null">{{ errorMessage }}</div>
+
+  </form>
+</div>
+
+
+<div class="container">
+    <div class="row grid-container">
+        <div class="col-md-10">
+            <div class="table">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                        
+                            <th > Name</th>
+                            <th >Zinc %</th>
+                            <th >Waste %</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let i of items;trackBy:trackby.i">
+                            <td><a [routerLink]="['/items',i._id]">{{ i.name | capitalize }}</a></td>
+                            <td>{{ i.zinc  }} </td>
+                            <td>{{ i.waste }} </td>                         
+                        </tr>
+                        <tr *ngIf="!items.length">
+                            <td>&nbsp;</td>
+                            <td colspan="6">No Records Found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
