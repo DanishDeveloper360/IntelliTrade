@@ -59,7 +59,6 @@ export class IngotEditComponent implements OnInit {
 
     this.getItems();
   }
-
   // getCustomer(id: string) {
   //     this.dataService.getCustomer(id)
   //       .subscribe((customer: ICustomer) => {
@@ -130,6 +129,8 @@ export class IngotEditComponent implements OnInit {
       waste: 0
     };
   }
+
+  
 
   // delete(event: Event) {
   //   event.preventDefault();

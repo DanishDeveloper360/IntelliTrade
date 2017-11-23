@@ -5,50 +5,118 @@ const mongoose = require('mongoose'),
 
 class ItemsRepository {
 
-
     // insert a ingot
-    insertIngot(body, callback) {
+    // insertIngot(body, callback) {
+    //     console.log('*** ItemsRepository.insertIngot');
+    //     let item = new Ingot();
+    //     console.log(body);
+    //     let items = [];
+
+    //     this.getItems((err, data) => {
+    //         if (err) {
+    //             console.log('*** getItems error: ' + util.inspect(err));
+    //         } else {
+    //             console.log('*** getItems ok');
+    //             items = data.items;
+
+
+    //             item.ingotName = body.ingotName;
+    //             item.formulaName = body.formulaName;
+    //             item.profit = body.profit;
+    //             item.itemCost = body.itemCost;
+    //             item.wasteCost = body.wasteCost;
+    //             item.ingotCost = body.ingotCost;
+    //             item.rodi = body.rodi;
+    //             item.lm = body.lm;
+    //             item.sisa = body.sisa;
+    //             item.loha = body.loha;
+    //             item.zinc = body.zinc;
+    //             item.netIngotWeight = body.netIngotWeight;
+    //             item.totalItemWeight = body.totalItemWeight;
+    //             item.totalItemWeightMinusZinc = body.totalItemWeight;
+    //             item.items = items;
+
+    //             item.save((err, item) => {
+    //                 if (err) {
+    //                     console.log(`*** ItemsRepository insertItem error: ${err}`);
+    //                     return callback(err, null);
+    //                 }
+
+    //                 callback(null, item);
+    //             });
+
+    //         }
+    //     });
+    // }
+
+    async insertIngot(body, callback) {
+
+
         console.log('*** ItemsRepository.insertIngot');
-        let item = new Ingot();
+
         console.log(body);
-        let items = [];
 
-        this.getItems((err, data) => {
-            if (err) {
-                console.log('*** getItems error: ' + util.inspect(err));
-            } else {
-                console.log('*** getItems ok');
-                items = data.items;
+        const data = await this.getItemsTest();
+        console.log('*** getItems ok');
+        let items = data.items;
 
+        let item = new Ingot();
 
-                item.ingotName = body.ingotName;
-                item.formulaName = body.formulaName;
-                item.profit = body.profit;
-                item.itemCost = body.itemCost;
-                item.wasteCost = body.wasteCost;
-                item.ingotCost = body.ingotCost;
-                item.rodi = body.rodi;
-                item.lm = body.lm;
-                item.sisa = body.sisa;
-                item.loha = body.loha;
-                item.zinc = body.zinc;
-                item.netIngotWeight = body.netIngotWeight;
-                item.totalItemWeight = body.totalItemWeight;
-                item.totalItemWeightMinusZinc = body.totalItemWeight;
-                item.items = items;
+        item.ingotName = body.ingotName;
+        item.formulaName = body.formulaName;
+        item.items = items;
 
-                item.save((err, item) => {
-                    if (err) {
-                        console.log(`*** ItemsRepository insertItem error: ${err}`);
-                        return callback(err, null);
-                    }
+        await item.save();
 
-                    callback(null, item);
-                });
-
-            }
-        });
+        return item;
     }
+
+
+
+
+    // // insert a ingot
+    // insertIngot(body, callback) {
+    //     console.log('*** ItemsRepository.insertIngot');
+    //     let item = new Ingot();
+    //     console.log(body);
+    //     let items = [];
+
+    //     this.getItems((err, data) => {
+    //         if (err) {
+    //             console.log('*** getItems error: ' + util.inspect(err));
+    //         } else {
+    //             console.log('*** getItems ok');
+    //             items = data.items;
+
+
+    //             item.ingotName = body.ingotName;
+    //             item.formulaName = body.formulaName;
+    //             item.profit = body.profit;
+    //             item.itemCost = body.itemCost;
+    //             item.wasteCost = body.wasteCost;
+    //             item.ingotCost = body.ingotCost;
+    //             item.rodi = body.rodi;
+    //             item.lm = body.lm;
+    //             item.sisa = body.sisa;
+    //             item.loha = body.loha;
+    //             item.zinc = body.zinc;
+    //             item.netIngotWeight = body.netIngotWeight;
+    //             item.totalItemWeight = body.totalItemWeight;
+    //             item.totalItemWeightMinusZinc = body.totalItemWeight;
+    //             item.items = items;
+
+    //             item.save((err, item) => {
+    //                 if (err) {
+    //                     console.log(`*** ItemsRepository insertItem error: ${err}`);
+    //                     return callback(err, null);
+    //                 }
+
+    //                 callback(null, item);
+    //             });
+
+    //         }
+    //     });
+    // }
 
 
     // insert a item
@@ -61,7 +129,7 @@ class ItemsRepository {
         item.zinc = body.zinc;
         item.waste = body.waste;
 
-       item.save((err, item) => {
+        item.save((err, item) => {
             if (err) {
                 console.log(`*** ItemsRepository insertItem error: ${err}`);
                 return callback(err, null);
@@ -70,6 +138,34 @@ class ItemsRepository {
             callback(null, item);
         });
     }
+
+
+    // get all the customers
+    async getItemsTest() {
+        let response = {};
+        console.log('*** ItemsRepository.getItems');
+        //    await Item.count((err, itemsCount) => {
+        //         let count = itemsCount;
+        //         console.log(`Items count: ${count}`);
+
+        await Item.find({}, (err, items) => {
+            if (err) {
+                console.log(`*** ItemsRepository.getItems error: ${err}`);
+                return null;
+            }
+            console.log(`Items fetched`);
+            response = {
+                count: items.length,
+                items: items
+            };
+        });
+
+        // });
+
+        return response;
+    }
+
+
 
     // get all the customers
     getItems(callback) {

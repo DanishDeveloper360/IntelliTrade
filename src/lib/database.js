@@ -28,7 +28,7 @@ class Database {
             console.log('We have connected to mongodb');
             callback(null, true);
         });
-
+        mongoose.Promise = global.Promise;
     }
 
     // disconnect from database
