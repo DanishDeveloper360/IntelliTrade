@@ -48,6 +48,7 @@ export interface IItem {
     name: string;
     zinc: number;
     waste: number;
+    rate: number;
 }
 
 export interface IItemResponse {
@@ -59,7 +60,7 @@ export interface IItemResponse {
 
 export interface IIngotItem {
     item: IItem;
-    weight: number;
+    weight?: number;
 }
 
 export interface IIngot {
@@ -77,6 +78,9 @@ export interface IIngot {
   netIngotWeight?: number;
   totalItemWeight?: number;
   totalItemWeightMinusZinc?: number;  
-  items?: IIngotItem[]
+  items?: IIngotItem[],
+
+  waste: number,
+  ingotRate:number
 }
 

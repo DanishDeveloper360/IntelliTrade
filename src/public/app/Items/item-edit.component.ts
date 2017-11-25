@@ -15,7 +15,8 @@ export class ItemEditComponent implements OnInit {
   item: IItem = {
     name: '',
     zinc: 0,
-    waste: 0
+    waste: 0,
+    rate:0
   };
   items: IItem[] = [];
   errorMessage: string;

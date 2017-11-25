@@ -128,6 +128,7 @@ class ItemsRepository {
         item.name = body.name;
         item.zinc = body.zinc;
         item.waste = body.waste;
+        item.rate = body.rate;
 
         item.save((err, item) => {
             if (err) {

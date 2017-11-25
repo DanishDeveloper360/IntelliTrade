@@ -27,12 +27,16 @@ export class IngotEditComponent implements OnInit {
     netIngotWeight: 0,
     totalItemWeight: 0,
     totalItemWeightMinusZinc: 0,
-    items: []
-  }
+    items: [],
+    waste: 0,
+    ingotRate:0
+  };
+  
   item: IItem = {
     name: '',
     zinc: 0,
-    waste: 0
+    waste: 0,
+    rate: 0
   };
 
   newItem: IIngotItem = {
@@ -73,77 +77,71 @@ export class IngotEditComponent implements OnInit {
     let newCourse = Object.assign({}, this.newItem);
 
     this.ingot.items.push(newCourse);
+
+    let zincWeight = this.ingot.items.map(x => {
+    return (x.item.zinc / 100) * x.weight; 
+    }).reduce((a, b) => a + b, 0);
+  
+    this.ingot.zinc = zincWeight;
+
+    t wasteWeight = this . ingot.items.map(  {
+      return (x.item.waste/100) * x.weight;
+    }).reduce((a, b) => a + b, 0);
+      this.ingot.waste  = wasteWeight;    
+
+    this.ingot.totalItemWeight = this.ingot.items.map(x => {
+      return x.weight;
+    }).reduce((a, b) => a + b, 0);
+
+
+    this.ingot.totalItemWeightMinusZinc = this.ingot.items.map(x => {
+      return x.weight;
+    }).reduce((a, b) => a + b, 0) - this.ingot.zinc;
+
+    this.ingot.netIngotWeight = this.ingot.totalItemWeight + this.ingot.zinc 
+    - this.ingot.lm -this.ingot.sisa -t his.ingot.rodi- t his.ingot.loha -t his.ingot.waste;
+
   }
 
-  DeleteItem(event: Event, obj: IIngotItem) {
+deleteItem(event: Event, obj: IIngotItem) {
 
-    this.ingot.items.splice(this.ingot.items.indexOf(obj), 1);
+  this.ingot.items.splice(this.ingot.items.indexOf(obj), 1);
 
-  }
-  getItems() {
+}
+
+ getItems() {
+  
     this.dataService.getItems().subscribe((items: IItem[]) => {
-      console.log(items);
-      this.items = items
+    console.log(items);
+    this.items = items
 
-    },
+  },
       (err: any) => console.log(err),
       () => console.log('getItems() retrieved items'));
   }
 
-  submit() {
 
-    if (this.item._id) {
+  CalculateProfit(event){
 
-      // this.dataService.updateCustomer(this.customer)
-      //   .subscribe((customer: ICustomer) => {
-      //     if (customer) {
-      //       this.router.navigate(['/customers']);
-      //     } else {
-      //       this.errorMessage = 'Unable to save customer';
-      //     }
-      //   },
-      //   (err: any) => console.log(err));
+    let totalItemRate = this.ingot.items.map(x => {
+      return x.rate;
+    }).reduce((a, b) => a + b, 0);
 
-    } else {
+    // this.ingot.profit = this.ingot.netIngotWeight * this.ingot.ingotRate - totalItemRate -
+    
+    // ;
 
-      this.dataService.insertItem(this.item)
-        .subscribe((item: IItem) => {
-          if (item) {
-            console.log(item);
-            this.getItems();
-          }
-          else {
-            this.errorMessage = 'Unable to add item, please check your entry data and try again.';
-          }
-        },
-        (err: any) => console.log(err));
-
-    }
   }
+
 
   cancel(event: Event) {
     event.preventDefault();
     this.item = {
       name: '',
       zinc: 0,
-      waste: 0
+      waste: 0,
+      rate:0
     };
-  }
-
-  
-
-  // delete(event: Event) {
-  //   event.preventDefault();
-  //   this.dataService.deleteCustomer(this.customer._id)
-  //       .subscribe((status: boolean) => {
-  //         if (status) {
-  //           this.router.navigate(['/customers']);
-  //         }
-  //         else {
-  //           this.errorMessage = 'Unable to delete customer';
-  //         }
-  //       },
-  //       (err) => console.log(err));
-  // }
+  }  
 
 }
