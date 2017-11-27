@@ -13,11 +13,13 @@ import { TrackByService } from '../core/trackby.service';
 export class ItemEditComponent implements OnInit {
 
   item: IItem = {
+    _id: '',
     name: '',
     zinc: 0,
     waste: 0,
-    rate:0
+    rate:0    
   };
+
   items: IItem[] = [];
   errorMessage: string;
   deleteMessageEnabled: boolean;
@@ -91,9 +93,11 @@ export class ItemEditComponent implements OnInit {
   cancel(event: Event) {
     event.preventDefault();
     this.item = {
+          _id: '',
           name: '',
           zinc: 0,
-          waste: 0
+          waste: 0,
+          rate:0
         };
   }
 

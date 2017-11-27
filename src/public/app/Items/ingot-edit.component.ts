@@ -29,9 +29,10 @@ export class IngotEditComponent implements OnInit {
     totalItemWeightMinusZinc: 0,
     items: [],
     waste: 0,
-    ingotRate:0
+    ingotRate: 0,
+    zincRate:0
   };
-  
+
   item: IItem = {
     name: '',
     zinc: 0,
@@ -58,18 +59,10 @@ export class IngotEditComponent implements OnInit {
     let id = this.route.snapshot.params['id'];
     if (id !== '0') {
       this.operationText = 'Update';
-      // this.getCustomer(id);
     }
 
     this.getItems();
   }
-  // getCustomer(id: string) {
-  //     this.dataService.getCustomer(id)
-  //       .subscribe((customer: ICustomer) => {
-  //         this.customer = customer;
-  //       },
-  //       (err: any) => console.log(err));
-  // }
 
   AddNewItem(event: Event) {
     event.preventDefault();
@@ -79,15 +72,16 @@ export class IngotEditComponent implements OnInit {
     this.ingot.items.push(newCourse);
 
     let zincWeight = this.ingot.items.map(x => {
-    return (x.item.zinc / 100) * x.weight; 
+      return (x.item.zinc / 100) * x.weight;
     }).reduce((a, b) => a + b, 0);
-  
+
     this.ingot.zinc = zincWeight;
 
-    t wasteWeight = this . ingot.items.map(  {
-      return (x.item.waste/100) * x.weight;
+    let wasteWeight = this.ingot.items.map(x => {
+      return ((x.item.waste/100) * x.weight);
     }).reduce((a, b) => a + b, 0);
-      this.ingot.waste  = wasteWeight;    
+
+    this.ingot.waste = wasteWeight;
 
     this.ingot.totalItemWeight = this.ingot.items.map(x => {
       return x.weight;
@@ -97,41 +91,44 @@ export class IngotEditComponent implements OnInit {
     this.ingot.totalItemWeightMinusZinc = this.ingot.items.map(x => {
       return x.weight;
     }).reduce((a, b) => a + b, 0) - this.ingot.zinc;
+    
+    this.ingot.netIngotWeight = this.ingot.totalItemWeight + this.ingot.zinc
+      - this.ingot.lm - this.ingot.sisa - this.ingot.rodi - this.ingot.loha - this.ingot.waste;
+  }
 
-    this.ingot.netIngotWeight = this.ingot.totalItemWeight + this.ingot.zinc 
-    - this.ingot.lm -this.ingot.sisa -t his.ingot.rodi- t his.ingot.loha -t his.ingot.waste;
+  DeleteItem(event: Event, obj: IIngotItem) {
+
+    this.ingot.items.splice(this.ingot.items.indexOf(obj), 1);
 
   }
 
-deleteItem(event: Event, obj: IIngotItem) {
+  getItems() {
 
-  this.ingot.items.splice(this.ingot.items.indexOf(obj), 1);
-
-}
-
- getItems() {
-  
     this.dataService.getItems().subscribe((items: IItem[]) => {
-    console.log(items);
-    this.items = items
+      console.log(items);
+      this.items = items
 
-  },
+    },
       (err: any) => console.log(err),
       () => console.log('getItems() retrieved items'));
-  }
+  };
 
 
-  CalculateProfit(event){
+  CalculateProfit(event) {
 
     let totalItemRate = this.ingot.items.map(x => {
-      return x.rate;
+      return x.item.rate * x.weight;
     }).reduce((a, b) => a + b, 0);
 
-    // this.ingot.profit = this.ingot.netIngotWeight * this.ingot.ingotRate - totalItemRate -
-    
-    // ;
+    let rodiRate =  this.items.find(x => x.name.toLowerCase().trim() == "rodi").rate * this.ingot.rodi;
+    let lmRate =  this.items.find(x => x.name.toLowerCase().trim() == "lm").rate * this.ingot.lm;
+    let sisaRate =  this.items.find(x => x.name.toLowerCase().trim() == "sisa").rate * this.ingot.sisa;
+    let lohaRate =  this.items.find(x => x.name.toLowerCase().trim() == "loha").rate * this.ingot.loha;
 
-  }
+    this.ingot.profit = -10000 + this.ingot.netIngotWeight * this.ingot.ingotRate 
+    - totalItemRate + rodiRate + lmRate + sisaRate + lohaRate - (this.ingot.zinc * this.ingot.zincRate);
+    
+  };
 
 
   cancel(event: Event) {
@@ -140,8 +137,8 @@ deleteItem(event: Event, obj: IIngotItem) {
       name: '',
       zinc: 0,
       waste: 0,
-      rate:0
+      rate: 0
     };
-  }  
+  };
 
 }

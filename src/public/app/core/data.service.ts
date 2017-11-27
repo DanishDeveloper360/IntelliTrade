@@ -95,12 +95,6 @@ export class DataService {
                    .catch(this.handleError);
     }
 
-
-
-
-
-
-
     calculateCustomersOrderTotal(customers: ICustomer[]) {
         for (let customer of customers) {
             if (customer && customer.orders) {

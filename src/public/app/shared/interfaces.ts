@@ -45,6 +45,7 @@ export interface ICustomerResponse {
 }
 
 export interface IItem {
+    _id?: string;
     name: string;
     zinc: number;
     waste: number;
@@ -79,7 +80,7 @@ export interface IIngot {
   totalItemWeight?: number;
   totalItemWeightMinusZinc?: number;  
   items?: IIngotItem[],
-
+  zincRate?:number,
   waste: number,
   ingotRate:number
 }
