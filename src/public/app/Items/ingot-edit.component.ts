@@ -71,28 +71,28 @@ export class IngotEditComponent implements OnInit {
 
     this.ingot.items.push(newCourse);
 
-    let zincWeight = this.ingot.items.map(x => {
-      return (x.item.zinc / 100) * x.weight;
-    }).reduce((a, b) => a + b, 0);
+    this.calculateData();
+  }
 
-    this.ingot.zinc = zincWeight;
-
+  calculateData() {
+  
+    this.CalculateZinc(null);
+    
     let wasteWeight = this.ingot.items.map(x => {
-      return ((x.item.waste/100) * x.weight);
+      return ((x.item.waste / 100) * x.weight);
     }).reduce((a, b) => a + b, 0);
-
+    
     this.ingot.waste = wasteWeight;
-
+    
     this.ingot.totalItemWeight = this.ingot.items.map(x => {
       return x.weight;
-    }).reduce((a, b) => a + b, 0);
-
-
+    }).reduce((a, b) => a + b, 0) + this.ingot.zinc;
+    
     this.ingot.totalItemWeightMinusZinc = this.ingot.items.map(x => {
       return x.weight;
-    }).reduce((a, b) => a + b, 0) - this.ingot.zinc;
+    }).reduce((a, b) => a + b, 0);
     
-    this.ingot.netIngotWeight = this.ingot.totalItemWeight + this.ingot.zinc
+    this.ingot.netIngotWeight = this.ingot.totalItemWeight
       - this.ingot.lm - this.ingot.sisa - this.ingot.rodi - this.ingot.loha - this.ingot.waste;
   }
 
@@ -116,6 +116,8 @@ export class IngotEditComponent implements OnInit {
 
   CalculateProfit(event) {
 
+    this.calculateData();
+    
     let totalItemRate = this.ingot.items.map(x => {
       return x.item.rate * x.weight;
     }).reduce((a, b) => a + b, 0);
@@ -130,6 +132,14 @@ export class IngotEditComponent implements OnInit {
     
   };
 
+  CalculateZinc(event: Event) {
+      
+    let zincWeight = this.ingot.items.map(x => {
+      return (x.item.zinc / 100) * x.weight;
+    }).reduce((a, b) => a + b, 0);
+    
+    this.ingot.zinc = zincWeight;
+  };
 
   cancel(event: Event) {
     event.preventDefault();
