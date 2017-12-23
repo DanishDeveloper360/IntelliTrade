@@ -53,81 +53,83 @@
 
             <!--<div class="form-group">
                     <label> Name</label>
-                    <input type="text" class="form-control" name="name" [(ngModel)]="item.name" #name="ngModel" required>
+                    <input type="number" class="form-control" name="name" [(ngModel)]="item.name" #name="ngModel" required>
                     <div class="alert alert-danger" [hidden]="name.untouched || name.valid"> Name is required</div>
                 </div>
                 <div class="form-group">
                     <label>Zinc %</label>
-                    <input type="text" class="form-control" name="zinc" [(ngModel)]="item.zinc" #zinc="ngModel" required>
+                    <input type="number" class="form-control" name="zinc" [(ngModel)]="item.zinc" #zinc="ngModel" required>
                     <div class="alert alert-danger" [hidden]="zinc.untouched || zinc.valid">Zinc % is required</div>
                 </div>
 
                 <div class="form-group">
                     <label>Waste %</label>
-                    <input type="text" class="form-control" name="waste" [(ngModel)]="item.waste" #waste="ngModel" required>
+                    <input type="number" class="form-control" name="waste" [(ngModel)]="item.waste" #waste="ngModel" required>
                     <div class="alert alert-danger" [hidden]="waste.untouched || waste.valid">Waste % is required</div>
                 </div>-->
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label> Profit</label>
-                <input type="text" [(ngModel)]="ingot.profit" #ingot.profit="ngModel" class="form-control">
+                <input type="number" [(ngModel)]="ingot.profit" #ingot.profit="ngModel" class="form-control">
             </div>
             <h4>
                 Wapsi - Residual
             </h4>
             <div class="form-group">
                 <label> Rodi</label>
-                <input type="text" [(ngModel)]="ingot.rodi" #ingot.rodi="ngModel" class="form-control">
+                <input type="number" [(ngModel)]="ingot.rodi" #ingot.rodi="ngModel" class="form-control">
             </div>
             <div class="form-group">
                 <label> L.M.</label>
-                <input type="text" [(ngModel)]="ingot.lm" #ingot.lm="ngModel" class="form-control">
+                <input type="number" [(ngModel)]="ingot.lm" #ingot.lm="ngModel" class="form-control">
             </div>
             <div class="form-group">
                 <label> Sisa</label>
-                <input type="text" [(ngModel)]="ingot.sisa" #ingot.sisa="ngModel" class="form-control">
+                <input type="number" [(ngModel)]="ingot.sisa" #ingot.sisa="ngModel" class="form-control">
             </div>
             <div class="form-group">
                 <label> Loha</label>
-                <input type="text" [(ngModel)]="ingot.loha" #ingot.loha="ngModel" class="form-control">
+                <input type="number" [(ngModel)]="ingot.loha" #ingot.loha="ngModel" class="form-control">
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label>Zinc</label>
-                <input type="text" [(ngModel)]="ingot.zinc" #ingot.zinc="ngModel" class="form-control">
+                <input type="number" [(ngModel)]="ingot.zinc" #ingot.zinc="ngModel" class="form-control">
             </div>
             <div class="form-group">
                 <label>Zinc Rate</label>
-                <input type="text" [(ngModel)]="ingot.zincRate" #ingot.zincRate="ngModel" class="form-control">
+                <input type="number" [(ngModel)]="ingot.zincRate" #ingot.zincRate="ngModel" class="form-control">
             </div>
 
             <div class="form-group">
                 <label> Nett Ingots Weight</label>
-                <input type="text" [(ngModel)]="ingot.netIngotWeight" #ingot.netIngotWeight="ngModel" class="form-control">
+                <input type="number" [(ngModel)]="ingot.netIngotWeight" #ingot.netIngotWeight="ngModel" class="form-control">
             </div>
             <div class="form-group">
                 <label>Ingot Rate</label>
-                <input type="text" [(ngModel)] = "ingot.ingotRate" #ingot.ingotRate="ngModel"  class="form-control">
+                <input type="number" [(ngModel)] = "ingot.ingotRate" #ingot.ingotRate="ngModel"  class="form-control">
             </div>
 
             <div class="form-group">
                 <label>Total Item Weight</label>
-                <input type="text"   [(ngModel)] = "ingot.totalItemWeight" #ingot.totalItemWeight="ngModel" class="form-control">
+                <input type="number"   [(ngModel)] = "ingot.totalItemWeight" #ingot.totalItemWeight="ngModel" class="form-control">
             </div>
 
             <div class="form-group">
                 <label>Total Item Weight - Zinc Weight</label>
-                <input type="text" [(ngModel)] = "ingot.totalItemWeightMinusZinc" #ingot.totalItemWeightMinusZinc="ngModel" class="form-control">
+                <input type="number" [(ngModel)] = "ingot.totalItemWeightMinusZinc" #ingot.totalItemWeightMinusZinc="ngModel" class="form-control">
             </div>
             <div class="form-group">
                 <label>Waste</label>
-                <input type="text" [(ngModel)]="ingot.waste" #ingot.waste="ngModel" class="form-control">
+                <input type="number" [(ngModel)]="ingot.waste" #ingot.waste="ngModel" class="form-control">
             </div>
             <div class="pull-right">
                 <button class="btn btn-success" (click)="CalculateProfit($event)">Calculate Profit</button>
                 <button class="btn btn-default" (click)="CalculateZinc($event)">Calculate Zinc</button>
+                <button class="btn btn-default" (click)="calculateWaste($event)">Calculate Waste</button>
+                
             </div>
         </div>
 
